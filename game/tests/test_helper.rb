@@ -247,7 +247,8 @@ def build_actor(attributes = nil)
     combatant: {
       hp: values.delete(:hp) || 20,
       base_power: values.delete(:base_power) || 5,
-      base_defense: values.delete(:base_defense) || 5
+      base_defense: values.delete(:base_defense) || 5,
+      base_vision: values.delete(:base_vision) || 5
     },
     inventory: { items: [] },
     ai: { type: :enemy, data: {} },

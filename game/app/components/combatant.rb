@@ -1,6 +1,6 @@
 module Components
   class Combatant < BaseComponent
-    data_accessor :max_hp, :base_power, :base_defense
+    data_accessor :max_hp, :base_power, :base_defense, :base_vision
     data_reader :hp
 
     def power
@@ -9,6 +9,10 @@ module Components
 
     def defense
       base_defense + entity.equipment.defense_bonus
+    end
+
+    def vision
+      base_vision + entity.equipment.vision_bonus
     end
 
     def hp=(value)

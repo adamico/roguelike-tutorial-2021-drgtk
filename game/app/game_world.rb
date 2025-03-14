@@ -57,9 +57,10 @@ class GameWorld < DataBackedObject
       },
       item_weights: {
         1 => { health_potion: 35 },
-        2 => { confusion_scroll: 10 },
-        4 => { lightning_scroll: 25, steel_pipe: 5 },
-        6 => { fireball_scroll: 25, light_trooper_vest: 15 }
+        2 => { confusion_scroll: 10, lantern: 5 },
+        3 => { blindness_scroll: 10 },
+        4 => { lightning_scroll: 25, sword: 5 },
+        6 => { fireball_scroll: 25, chain_armor: 15 }
       },
       monster_weights: {
         1 => { orc: 80 },

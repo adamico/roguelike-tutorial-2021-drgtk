@@ -1,17 +1,25 @@
 module Components
   class Equipment < BaseComponent
-    attr_reader :weapon, :armor
+    attr_reader :weapon, :armor, :tool
 
     def power_bonus
-      (weapon&.equippable&.power_bonus || 0) + (armor&.equippable&.power_bonus || 0)
+      bonus_for('power')
     end
 
     def defense_bonus
-      (weapon&.equippable&.defense_bonus || 0) + (armor&.equippable&.defense_bonus || 0)
+      bonus_for('defense')
+    end
+
+    def vision_bonus
+      bonus_for('vision')
+    end
+
+    def bonus_for(stat)
+      (weapon&.equippable&.send("#{stat}_bonus") || 0) + (armor&.equippable&.send("#{stat}_bonus") || 0) + (tool&.equippable&.send("#{stat}_bonus") || 0)
     end
 
     def equipped?(item)
-      item && (weapon == item || armor == item)
+      item && (weapon == item || armor == item || tool == item)
     end
 
     def equip(item)

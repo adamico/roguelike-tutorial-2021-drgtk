@@ -44,3 +44,11 @@ def test_combatant_defense(_args, assert)
 
   assert.equal! actor.combatant.defense, 5
 end
+
+def test_combatant_vision(_args, assert)
+  actor = build_actor base_vision: 2
+  armor = build_item equippable: { slot: :tool, vision_bonus: 3 }
+  actor.equipment.equip armor
+
+  assert.equal! actor.combatant.vision, 5
+end

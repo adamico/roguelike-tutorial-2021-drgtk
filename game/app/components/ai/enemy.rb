@@ -7,7 +7,8 @@ module Components
         dx = target.x - entity.x
         distance = [dx.abs, dy.abs].max
 
-        if entity.game_map.visible?(entity.x, entity.y)
+        # if entity.game_map.visible?(entity.x, entity.y)
+        if entity.combatant.vision >= distance
           return MeleeAction.new(entity, dx: dx, dy: dy).perform if distance <= 1
 
           data.path = path_to(target.x, target.y)

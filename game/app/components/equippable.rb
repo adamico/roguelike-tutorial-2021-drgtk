@@ -28,5 +28,9 @@ module Components
     def defense_bonus
       data.defense_bonus || 0
     end
+
+    def vision_bonus
+      data.vision_bonus || 0
+    end
   end
 end

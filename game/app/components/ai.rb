@@ -3,6 +3,7 @@ require 'app/components/ai/pathfinding.rb'
 require 'app/components/ai/enemy.rb'
 require 'app/components/ai/none.rb'
 require 'app/components/ai/confused.rb'
+require 'app/components/ai/blind.rb'
 
 module Components
   module AI
@@ -13,6 +14,8 @@ module Components
           Components::AI::Enemy.new(entity, data.data)
         when :confused
           Components::AI::Confused.new(entity, data.data)
+        when :blind
+          Components::AI::Blind.new(entity, data.data)
         else
           Components::AI::None
         end

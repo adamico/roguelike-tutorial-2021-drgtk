@@ -103,7 +103,7 @@ class Game
   end
 
   def update_fov
-    game_map.update_fov(x: player.x, y: player.y, radius: 8)
+    game_map.update_fov(x: player.x, y: player.y, radius: player.combatant.vision)
   end
 
   def handle_game_over

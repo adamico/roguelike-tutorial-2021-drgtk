@@ -76,6 +76,11 @@ EntityPrototypes.define_item  :confusion_scroll,
                               char: '~', color: [207, 63, 255],
                               consumable: { type: :confusion, turns: 10 }
 
+EntityPrototypes.define_item  :blindness_scroll,
+                              name: 'Blindness Scroll',
+                              char: '~', color: [0, 0, 255],
+                              consumable: { type: :blindness, turns: 10 }
+
 EntityPrototypes.define_item  :fireball_scroll,
                               name: 'Fireball Scroll',
                               char: '~', color: [255, 0, 0],
@@ -104,4 +109,4 @@ EntityPrototypes.define_item  :chain_mail,
 EntityPrototypes.define_item  :lantern,
                               name: 'Lantern',
                               char: "(", color: [139, 69, 19],
-                              equippable: { slot: :tool, vision_bonus: 2}
+                              equippable: { slot: :tool, vision_bonus: 2 }
