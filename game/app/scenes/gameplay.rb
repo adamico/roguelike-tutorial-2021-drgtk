@@ -155,7 +155,7 @@ module Scenes
       return unless game_map.in_bounds?(cursor_x, cursor_y) && game_map.visible?(cursor_x, cursor_y)
 
       names_at_cursor_position = game_map.entities_at(cursor_x, cursor_y).map(&:name).join(', ').capitalize
-      console.print(x: 21, y: 5, string: names_at_cursor_position)
+      console.print(x: 21, y: 5, string: names_at_cursor_position) if $game.scene.class == Scenes::PositionSelection
     end
 
     def render_dimension_name(console)
