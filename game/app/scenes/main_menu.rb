@@ -1,7 +1,7 @@
 module Scenes
   class MainMenu < BaseScene
     def render(console)
-      console.background_image = 'title.png'
+      console.background_image = 'data/menu_background.png'
       render_title(console)
       render_menu(console)
     end
@@ -36,7 +36,7 @@ module Scenes
       $state.message_log = []
       $message_log = MessageLog.new $state.message_log
       $message_log.add_message(
-        text: 'Hello and welcome, traveler, to yet another dimension! Press ? at any time for help.',
+        text: WELCOME_TEXT,
         fg: Colors.welcome_text
       )
 
@@ -51,20 +51,20 @@ module Scenes
     def render_title(console)
       console.print_centered(
         x: console.width.idiv(2), y: console.height.idiv(2) + 4,
-        string: 'OUTLANDISH AND HAZARDOUS',
+        string: TITLE_TEXT,
         fg: Colors.menu_title
       )
       console.print_centered(
         x: console.width.idiv(2), y: 2,
-        string: 'By Kevin Fischer',
+        string: AUTHOR_TEXT,
         fg: Colors.menu_title
       )
     end
 
     def render_menu(console)
-      render_menu_entry(console, 0, '[N] Play a new game')
-      render_menu_entry(console, 1, '[C] Continue last game') if SaveGame.exists?
-      render_menu_entry(console, 2, '[Q] Quit') unless $gtk.platform? :web
+      render_menu_entry(console, 0, NEW_GAME_TEXT)
+      render_menu_entry(console, 1, CONTINUE_GAME_TEXT) if SaveGame.exists?
+      render_menu_entry(console, 2, QUIT_TEXT) unless $gtk.platform? :web
     end
 
     def render_menu_entry(console, index, text)

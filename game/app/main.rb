@@ -5,6 +5,8 @@ require 'lib/priority_queue.rb'
 require 'lib/engine.rb'
 require 'lib/serializer.rb'
 
+require 'app/constants.rb'
+
 require 'app/rng.rb'
 require 'app/colors.rb'
 require 'app/render_order.rb'
@@ -26,6 +28,8 @@ require 'app/screen_layout.rb'
 require 'app/save_game.rb'
 
 def tick(args)
+  # render_debug(args, args.inputs.keyboard.key_held.keycodes)
+  render_debug(args, $gtk.current_framerate.to_i)
   setup(args) if args.tick_count.zero?
 
   $render_context.gtk_outputs = args.outputs
@@ -41,24 +45,20 @@ def tick(args)
     $message_log.add_message(text: message, fg: Colors.error)
   end
 
-  render_framerate(args) unless $gtk.production
+  
 end
 
 def setup(_args)
-  # DragonRuby is fixed at 1280x720 so choosing a resolution that fits neatly
-  screen_width = 80  # 80 * 16 = 1280
-  screen_height = 45 # 45 * 16 = 720
-
-  tileset = Engine::Tileset.new('zilk-16x16.png')
-  $render_context = Engine::RenderContext.new(screen_width, screen_height, tileset: tileset)
-  $render_console = Engine::Console.new(screen_width, screen_height)
+  tileset = Engine::Tileset.new('data/cheepicus_16x16.png')
+  $render_context = Engine::RenderContext.new(SCREEN_WIDTH, SCREEN_HEIGHT, tileset: tileset)
+  $render_console = Engine::Console.new(SCREEN_WIDTH, SCREEN_HEIGHT)
 
   $game = Game.new
   $game.scene = Scenes::MainMenu.new
 end
 
-def render_framerate(args)
-  args.outputs.primitives << [0, 720, $gtk.current_framerate.to_i.to_s, 255, 255, 255].label
+def render_debug(args, constant)
+  args.outputs.debug.watch constant
 end
 
 $keydown_frames = {}
@@ -71,27 +71,27 @@ def process_input(gtk_inputs)
     result << { type: :character_screen } if key_down.c
     result << { type: :char_typed, char: gtk_inputs.text[0] } unless gtk_inputs.text.empty?
     result << { type: :quit } if key_down.escape
-    result << { type: :up } if down_or_held(keyboard, :up) || down_or_held(keyboard, :k)
-    result << { type: :down } if down_or_held(keyboard, :down) || down_or_held(keyboard, :j)
-    result << { type: :left } if down_or_held(keyboard, :left) || down_or_held(keyboard, :h)
-    result << { type: :right } if down_or_held(keyboard, :right) || down_or_held(keyboard, :l)
-    result << { type: :up_right } if down_or_held(keyboard, :u) || down_or_held(keyboard, :kp_nine)
-    result << { type: :up_left } if down_or_held(keyboard, :y) || down_or_held(keyboard, :kp_seven)
-    result << { type: :down_right } if down_or_held(keyboard, :n) || down_or_held(keyboard, :kp_three) 
-    result << { type: :down_left } if down_or_held(keyboard, :b) || down_or_held(keyboard, :kp_one)
-    result << { type: :wait } if key_down.space || key_down.period
+    result << { type: :up } if down_or_held_any?(keyboard, UP_KEYS)
+    result << { type: :down } if down_or_held_any?(keyboard, DOWN_KEYS)
+    result << { type: :left } if down_or_held_any?(keyboard, LEFT_KEYS)
+    result << { type: :right } if down_or_held_any?(keyboard, RIGHT_KEYS)
+    result << { type: :up_right } if down_or_held_any?(keyboard, UP_RIGHT_KEYS)
+    result << { type: :up_left } if down_or_held_any?(keyboard, UP_LEFT_KEYS)
+    result << { type: :down_right } if down_or_held_any?(keyboard, DOWN_RIGHT_KEYS) 
+    result << { type: :down_left } if down_or_held_any?(keyboard, DOWN_LEFT_KEYS)
+    result << { type: :wait } if down_or_held_any?(keyboard, WAIT_KEYS)
     result << { type: :view_history } if key_down.v
     result << { type: :page_up } if key_down.pageup
     result << { type: :page_down } if key_down.pagedown
     result << { type: :home } if key_down.home
     result << { type: :end } if key_down.end
-    result << { type: :interact } if key_down.enter
+    result << { type: :interact } if down_any?(keyboard, INTERACTION_KEYS)
     result << { type: :get } if key_down.g
     result << { type: :inventory } if key_down.i
     result << { type: :drop } if key_down.d
     result << { type: :confirm } if key_down.enter
     result << { type: :click } if mouse.down
-    result << { type: :look } if key_down.forward_slash
+    result << { type: :look } if down_any?(keyboard, LOOK_KEYS)
     result << { type: :help } if key_down.question_mark
     result << { type: :enter_portal } if key_down.greater_than
     result << { type: :main_menu_new_game } if key_down.n
@@ -100,11 +100,19 @@ def process_input(gtk_inputs)
   }
 end
 
+def down_any?(keyboard, keys)
+  keys.any? { |key| keyboard.key_down?(key) }
+end
+
+def down_or_held_any?(keyboard, keys)
+  keys.any? { |key| down_or_held(keyboard, key) }
+end
+
 def down_or_held(keyboard, key)
-  if keyboard.key_down.send(key)
+  if keyboard.key_down?(key)
     $keydown_frames[key] = 0
     true
-  elsif keyboard.key_held.send(key)
+  elsif keyboard.key_held?(key)
     $keydown_frames[key] += 1
     $keydown_frames[key] > 10 && $keydown_frames[key] % 5 == 0
   end
