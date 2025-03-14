@@ -56,16 +56,16 @@ class GameWorld < DataBackedObject
         6 => 5
       },
       item_weights: {
-        1 => { bandages: 35 },
-        2 => { neurosonic_emitter: 10 },
-        4 => { megavolt_capsule: 25, steel_pipe: 5 },
-        6 => { grenade: 25, light_trooper_vest: 15 }
+        1 => { health_potion: 35 },
+        2 => { confusion_scroll: 10 },
+        4 => { lightning_scroll: 25, steel_pipe: 5 },
+        6 => { fireball_scroll: 25, light_trooper_vest: 15 }
       },
       monster_weights: {
-        1 => { mutant_spider: 80 },
-        3 => { cyborg_bearman: 15 },
-        5 => { cyborg_bearman: 30 },
-        7 => { cyborg_bearman: 60 }
+        1 => { orc: 80 },
+        3 => { troll: 15 },
+        5 => { troll: 30 },
+        7 => { troll: 60 }
       }
     )
   end

@@ -16,10 +16,10 @@ def test_main_menu_new_game(_args, assert)
 
   assert.not_equal! Entities.player, player_before, 'No new player was generated'
   assert.equal! Entities.to_a.size, 3
-  assert.contains_exactly! Entities.map(&:name), ['Player', 'Kitchen Knife', 'Leather Jacket']
-  assert.contains_exactly! Entities.player.inventory.items.map(&:name), ['Kitchen Knife', 'Leather Jacket']
-  assert.equal! Entities.player.equipment.weapon.name, 'Kitchen Knife'
-  assert.equal! Entities.player.equipment.armor.name, 'Leather Jacket'
+  assert.contains_exactly! Entities.map(&:name), ['Player', 'Dagger', 'Leather Armor']
+  assert.contains_exactly! Entities.player.inventory.items.map(&:name), ['Dagger', 'Leather Armor']
+  assert.equal! Entities.player.equipment.weapon.name, 'Dagger'
+  assert.equal! Entities.player.equipment.armor.name, 'Leather Armor'
   assert.not_equal! generated_game_map, nil, 'No map was generated'
   assert.equal! $game.game_map, generated_game_map
 end

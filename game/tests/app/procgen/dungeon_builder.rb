@@ -17,8 +17,8 @@ def test_dungeon_builder_place_room(_args, assert)
       Procgen::Corridor.new(from: [13, 15], to: [13, 23])
     ],
     entities: [
-      { type: :cyborg_bearman, x: 4, y: 4 },
-      { type: :grenade, x: 10, y: 15 }
+      { type: :troll, x: 4, y: 4 },
+      { type: :fireball_scroll, x: 10, y: 15 }
     ]
   )
 
@@ -33,8 +33,8 @@ def test_dungeon_builder_place_room(_args, assert)
     { name: entity.name, x: entity.x, y: entity.y }
   }
   assert.contains_exactly! entity_positions, [
-    { name: 'Cyborg Bearman', x: 4, y: 4 },
-    { name: 'Grenade', x: 10, y: 15 },
+    { name: 'Troll', x: 4, y: 4 },
+    { name: 'Fireball Scroll', x: 10, y: 15 },
     { name: 'Player', x: 5, y: 5 }
   ]
   assert.equal! result.portal_location, [13, 23]
