@@ -59,6 +59,22 @@ module Scenes
       move_cursor_if_possible(0, -1)
     end
 
+    def dispatch_action_for_up_right
+      move_cursor_if_possible(1, 1)
+    end
+
+    def dispatch_action_for_up_left
+      move_cursor_if_possible(-1, 1)
+    end
+
+    def dispatch_action_for_down_right
+      move_cursor_if_possible(1, -1)
+    end
+
+    def dispatch_action_for_down_left
+      move_cursor_if_possible(-1, -1)
+    end
+
     def dispatch_action_for_confirm
       selected_position = ScreenLayout.console_to_map_position $game.cursor_position
       action_for_position selected_position
