@@ -12,8 +12,8 @@ end
 
 warn_if_env_is_not_set
 
-guard :shell do
-  watch(/^[^#]*\.rb/) { |m|
+guard :shell, all_on_start: true, cli: "--color" do
+  watch(/(.*).rb/) { |m|
     if run_all?(m)
       run_all
     else
@@ -41,7 +41,9 @@ end
 def run_dragonruby_tests(path)
   envs = 'SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy'
   relative_test_path = Pathname.new(path).relative_path_from(APP_ROOT)
-  system "#{envs} #{dragonruby_path} #{APP_ROOT} --test #{relative_test_path}"
+  command = "#{dragonruby_path} #{APP_ROOT} --test #{relative_test_path}"
+  puts command
+  system(command)
 end
 
 def dragonruby_path

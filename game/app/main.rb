@@ -75,10 +75,10 @@ def process_input(gtk_inputs)
     result << { type: :down } if down_or_held(keyboard, :down) || down_or_held(keyboard, :j)
     result << { type: :left } if down_or_held(keyboard, :left) || down_or_held(keyboard, :h)
     result << { type: :right } if down_or_held(keyboard, :right) || down_or_held(keyboard, :l)
-    result << { type: :up_right } if down_or_held(keyboard, :u)
-    result << { type: :up_left } if down_or_held(keyboard, :y)
-    result << { type: :down_right } if down_or_held(keyboard, :n)
-    result << { type: :down_left } if down_or_held(keyboard, :b)
+    result << { type: :up_right } if down_or_held(keyboard, :u) || down_or_held(keyboard, :kp_nine)
+    result << { type: :up_left } if down_or_held(keyboard, :y) || down_or_held(keyboard, :kp_seven)
+    result << { type: :down_right } if down_or_held(keyboard, :n) || down_or_held(keyboard, :kp_three) 
+    result << { type: :down_left } if down_or_held(keyboard, :b) || down_or_held(keyboard, :kp_one)
     result << { type: :wait } if key_down.space || key_down.period
     result << { type: :view_history } if key_down.v
     result << { type: :page_up } if key_down.pageup
