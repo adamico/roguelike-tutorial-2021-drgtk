@@ -96,7 +96,7 @@ module Engine
         end
       end
 
-      print_centered(x: x + width.idiv(2), y: top, string: title, fg: bg, bg: fg) if title
+      print_centered(x: x + width.idiv(2), y: top, string: title, fg: fg, bg: bg) if title
     end
 
     def assign_tiles(x, y, tile_array_2d)

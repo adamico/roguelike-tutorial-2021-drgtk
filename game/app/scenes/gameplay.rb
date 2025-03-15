@@ -26,7 +26,7 @@ module Scenes
       render_xp_bar(console)
       render_message_log(console)
       render_names_at_cursor_position(console)
-      render_dimension_name(console)
+      render_seed(console)
     end
 
     def dispatch_action_for_quit
@@ -158,8 +158,8 @@ module Scenes
       console.print(x: 21, y: 5, string: names_at_cursor_position) if $game.scene.class == Scenes::PositionSelection
     end
 
-    def render_dimension_name(console)
-      console.print(x: 1, y: 1, string: 'Dimension:')
+    def render_seed(console)
+      console.print(x: 1, y: 1, string: 'Seed:')
       console.print(x: 1, y: 0, string: "#{$game.game_world.seed}-#{$game.game_world.current_floor}")
     end
   end
