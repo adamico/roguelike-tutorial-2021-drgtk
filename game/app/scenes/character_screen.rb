@@ -4,9 +4,9 @@ module Scenes
       super
       @window_x = window_x
       @window_top = 44
-      @title = 'Character Information'
+      @title = CHARACTER_SCREEN_TITLE_TEXT
       @window_w = @title.size + 4
-      @window_h = 7
+      @window_h = 0
     end
 
     def render(console)
@@ -15,14 +15,24 @@ module Scenes
         title: @title,
         fg: Colors.item_window_fg, bg: Colors.item_window_bg
       )
+
       player = $game.player
       level = player.level
-      console.print(x: @window_x + 1, y: @window_top - 1, string: "Level: #{level.current_level}")
-      console.print(x: @window_x + 1, y: @window_top - 2, string: "XP: #{level.current_xp}")
-      console.print(x: @window_x + 1, y: @window_top - 3, string: "XP for next Level: #{level.experience_to_next_level}")
       combatant = player.combatant
-      console.print(x: @window_x + 1, y: @window_top - 4, string: "Attack: #{combatant.power}")
-      console.print(x: @window_x + 1, y: @window_top - 5, string: "Defense: #{combatant.defense}")
+
+      lines = [
+        { label: "Level", value: level.current_level },
+        { label: "XP", value: [level.current_xp, level.experience_to_next_level].map(&:to_s).join("/") },
+        { label: "Attack", value: combatant.power },
+        { label: "Defense", value: combatant.defense },
+        { label: "Vision", value: combatant.vision }
+      ]
+
+      @window_h = lines.length + 2
+      
+      lines.each_with_index do |line, index|
+        console.print(x: @window_x + 1, y: @window_top - (index + 1), string: [line.label, line.value].map(&:to_s).join(": "))
+      end
     end
 
     def dispatch_action_for_quit

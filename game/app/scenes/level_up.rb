@@ -22,8 +22,8 @@ module Scenes
         title: 'Level Up',
         fg: Colors.item_window_fg, bg: Colors.item_window_bg
       )
-      console.print(x: @window_x + 1, y: @window_top - 1, string: 'Congratulations! You level up!')
-      console.print(x: @window_x + 1, y: @window_top - 2, string: 'Select an attribute to increasse.')
+      console.print(x: @window_x + 1, y: @window_top - 1, string: LEVEL_UP_TITLE_TEXT)
+      console.print(x: @window_x + 1, y: @window_top - 2, string: LEVEL_UP_SUBTITLE_TEXT)
       @choice.render(console)
     end
 

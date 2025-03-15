@@ -3,7 +3,7 @@ module Scenes
     def initialize(inventory:, title: nil, window_x: 0, &build_action_for_selected_item)
       @inventory = inventory
       @build_action_for_selected_item = build_action_for_selected_item
-      @title = title || 'Select item'
+      @title = title || ITEM_SELECTION_TITLE_TEXT
       @window_x = window_x
       @window_h = [@inventory.items.size + 2, 3].max
       @window_w = calc_window_w

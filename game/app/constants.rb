@@ -4,7 +4,21 @@ AUTHOR_TEXT = 'By kc00l'
 NEW_GAME_TEXT = '[N] Play a new game'
 CONTINUE_GAME_TEXT = '[C] Continue last game'
 QUIT_TEXT = '[Q] Quit'
+CHARACTER_SCREEN_TITLE_TEXT = '┤Character Information├'
+MESSAGE_HISTORY_TITLE_TEXT = '┤Message history├'
+ITEM_SELECTION_TITLE_TEXT = '┤Select item├'
+LEVEL_UP_TITLE_TEXT = 'Congratulations! You level up!'
+LEVEL_UP_SUBTITLE_TEXT = 'Select an attribute to increase.'
 
+EXCEPTION_NOTHING_TO_PICK_UP_TEXT = 'There is nothing to pick up.'
+PICKED_UP_TEXT = 'You picked up the'
+
+EXCEPTION_NO_PORTAL_HERE_TEXT = 'There is no portal here.'
+ENTER_PORTAL_TEXT = 'You enter the portal.'
+
+NOTHING_TO_ATTACK_TEXT = 'Nothing to attack.'
+
+WAY_BLOCKED_TEXT = 'That way is blocked.'
 # DragonRuby is fixed at 1280x720 so choosing a resolution that fits neatly
 SCREEN_WIDTH = 80  # 80 * 16 = 1280
 SCREEN_HEIGHT = 45 # 45 * 16 = 720

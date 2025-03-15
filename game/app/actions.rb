@@ -21,10 +21,10 @@ end
 class PickupAction < Action
   def perform
     item = items_at_own_position.first
-    raise Action::Impossible, 'There is nothing to pick up.' unless item
+    raise Action::Impossible, EXCEPTION_NOTHING_TO_PICK_UP_TEXT unless item
 
     item.place(@entity.inventory)
-    $message_log.add_message(text: "You picked up the #{item.name}!")
+    $message_log.add_message(text: "#{PICKED_UP_TEXT} #{item.name}!")
   end
 
   private
@@ -70,10 +70,10 @@ end
 
 class EnterPortalAction < Action
   def perform
-    raise Action::Impossible, 'There is no portal here.' unless on_portal_location?
+    raise Action::Impossible, EXCEPTION_NO_PORTAL_HERE_TEXT unless on_portal_location?
 
     $game.generate_next_floor
-    $message_log.add_message(text: 'You enter the portal.', fg: Colors.enter_portal)
+    $message_log.add_message(text: ENTER_PORTAL_TEXT, fg: Colors.enter_portal)
   end
 
   private
@@ -115,7 +115,7 @@ end
 class MeleeAction < ActionWithDirection
   def perform
     target = target_actor
-    raise Action::Impossible, 'Nothing to attack.' unless target
+    raise Action::Impossible, NOTHING_TO_ATTACK_TEXT unless target
 
     damage = @entity.combatant.power - target.combatant.defense
     attack_description = "#{@entity.name} attacks #{target_actor.name}"
@@ -133,8 +133,8 @@ end
 class MovementAction < ActionWithDirection
   def perform
     game_map = @entity.game_map
-    raise Action::Impossible, 'That way is blocked.' unless game_map.in_bounds?(dest_x, dest_y)
-    raise Action::Impossible, 'That way is blocked.' unless game_map.walkable?(dest_x, dest_y)
+    raise Action::Impossible, WAY_BLOCKED_TEXT unless game_map.in_bounds?(dest_x, dest_y)
+    raise Action::Impossible, WAY_BLOCKED_TEXT unless game_map.walkable?(dest_x, dest_y)
 
     @entity.move(@dx, @dy)
   end

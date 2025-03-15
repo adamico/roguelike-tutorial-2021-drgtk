@@ -22,7 +22,7 @@ module Scenes
       @log_console.draw_frame(x: 0, y: 0, width: @log_console.width, height: @log_console.height)
       @log_console.print_box_centered(
         x: 0, y: 0, width: @log_console.width, height: 1,
-        string: '┤Message history├'
+        string: MESSAGE_HISTORY_TITLE_TEXT
       )
       @message_log.messages = $message_log.messages[0..@cursor_index]
       @message_log.render(@log_console)
