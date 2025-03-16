@@ -17,6 +17,7 @@ require 'app/entity_prototypes.rb'
 require 'app/entities.rb'
 require 'app/message_log.rb'
 require 'app/scenes.rb'
+require 'app/debug.rb'
 require 'app/game.rb'
 require 'app/ui.rb'
 require 'app/game_tile.rb'
@@ -28,10 +29,9 @@ require 'app/screen_layout.rb'
 require 'app/save_game.rb'
 
 def tick(args)
-  # render_debug(args, args.inputs.keyboard.key_held.keycodes)
-  render_debug(args, $gtk.current_framerate.to_i)
   setup(args) if args.tick_count.zero?
-
+  $debug.render(args, $gtk.current_framerate.to_i)
+  
   $render_context.gtk_outputs = args.outputs
 
   begin
@@ -44,8 +44,6 @@ def tick(args)
     log_error(message)
     $message_log.add_message(text: message, fg: Colors.error)
   end
-
-  
 end
 
 def setup(_args)
@@ -55,10 +53,8 @@ def setup(_args)
 
   $game = Game.new
   $game.scene = Scenes::MainMenu.new
-end
 
-def render_debug(args, constant)
-  args.outputs.debug.watch constant
+  $debug = Debug
 end
 
 $keydown_frames = {}

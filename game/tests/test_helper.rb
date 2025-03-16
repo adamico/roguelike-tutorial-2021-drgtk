@@ -86,6 +86,13 @@ module GTK
       end
     end
 
+    def not_empty!(collection, message = nil)
+      @assertion_performed = true
+      return unless collection.empty?
+
+      raise "#{collection_description(collection)}\n\nwas not expected to be empty:\n it contains #{collection}\n#{message}."
+    end
+
     # Game specific
 
     def will_advance_turn!
