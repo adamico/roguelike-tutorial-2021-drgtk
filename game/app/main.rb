@@ -29,7 +29,6 @@ require 'app/screen_layout.rb'
 require 'app/save_game.rb'
 
 def tick(args)
-  setup(args) if args.tick_count.zero?
   $debug.render(args, $gtk.current_framerate.to_i)
   
   $render_context.gtk_outputs = args.outputs
@@ -46,7 +45,7 @@ def tick(args)
   end
 end
 
-def setup(_args)
+def boot(args)
   tileset = Engine::Tileset.new('data/cheepicus_16x16.png')
   $render_context = Engine::RenderContext.new(SCREEN_WIDTH, SCREEN_HEIGHT, tileset: tileset)
   $render_console = Engine::Console.new(SCREEN_WIDTH, SCREEN_HEIGHT)
