@@ -4,6 +4,6 @@
 devid=kc00l
 devtitle=Andrea D'Amico
 gameid=likearogue
-gametitle=Like a Rouge
+gametitle=Like a Rogue
 version=1.0.1
 icon=metadata/icon.png

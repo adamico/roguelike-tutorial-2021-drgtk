@@ -1,6 +1,8 @@
+cvars = $gtk.args.cvars
+
 WELCOME_TEXT = 'Welcome Player! Press ? at any time for help.'
-TITLE_TEXT = 'Like a Rogue'
-AUTHOR_TEXT = 'By kc00l'
+TITLE_TEXT = cvars["game_metadata.gametitle"].value.to_s
+AUTHOR_TEXT = "By #{cvars['game_metadata.devid'].value.to_s}"
 NEW_GAME_TEXT = '[N] Play a new game'
 CONTINUE_GAME_TEXT = '[C] Continue last game'
 QUIT_TEXT = '[Q] Quit'
@@ -19,6 +21,7 @@ ENTER_PORTAL_TEXT = 'You enter the portal.'
 NOTHING_TO_ATTACK_TEXT = 'Nothing to attack.'
 
 WAY_BLOCKED_TEXT = 'That way is blocked.'
+
 # DragonRuby is fixed at 1280x720 so choosing a resolution that fits neatly
 SCREEN_WIDTH = 80  # 80 * 16 = 1280
 SCREEN_HEIGHT = 45 # 45 * 16 = 720
