@@ -1,5 +1,46 @@
 module Scenes
   class MainMenu < BaseScene
+    attr :buttons
+
+    def initialize
+      create_buttons
+      super
+    end
+
+    def create_buttons
+      width = 24
+      height = 1
+      bg = [0, 0, 0, 150]
+      fg = Colors.menu_text
+
+      @buttons = []
+
+      [
+        {
+          text: NEW_GAME_TEXT,
+          display_condition: true
+        },
+        {
+          text: CONTINUE_GAME_TEXT,
+          display_condition: SaveGame.exists?
+        },
+        {
+          text: QUIT_TEXT,
+          display_condition: !$gtk.platform?(:web)
+        }
+      ].tap do |buttons|
+        buttons.each_with_index do |button, index|
+          @buttons << {
+            x_offset: 0, y_offset: index,
+            width: width, height: height,
+            bg: bg, fg: fg,
+            text: button.text,
+            display_condition: button.display_condition
+          }
+        end
+      end
+    end
+
     def render(console)
       console.background_image = 'data/menu_background.png'
       render_title(console)
@@ -19,8 +60,6 @@ module Scenes
 
       $game.quit
     end
-
-    private
 
     def new_game
       $state.entities = Entities.build_data
@@ -50,7 +89,7 @@ module Scenes
 
     def render_title(console)
       console.print_centered(
-        x: console.width.idiv(2), y: console.height.idiv(2) + 4,
+        x: console.width.idiv(2), y: console.height.idiv(2) + 16,
         string: TITLE_TEXT,
         fg: Colors.menu_title
       )
@@ -62,16 +101,19 @@ module Scenes
     end
 
     def render_menu(console)
-      render_menu_entry(console, 0, NEW_GAME_TEXT)
-      render_menu_entry(console, 1, CONTINUE_GAME_TEXT) if SaveGame.exists?
-      render_menu_entry(console, 2, QUIT_TEXT) unless $gtk.platform? :web
+      @buttons.each do |button|
+        render_menu_entry(console, button)
+      end
     end
 
-    def render_menu_entry(console, index, text)
-      x = console.width.idiv(2) - 12
-      y = console.height.idiv(2) - 2 - index
+    def render_menu_entry(console, button)
+      return unless button.display_condition
+
+      x, y = console.width.idiv(2) - 12, y = console.height.idiv(2) - 2 - button.y_offset
+      width, height = button.width, button.height
+      bg, fg = button.bg, button.fg
       console.draw_rect(x: x, y: y, width: 24, height: 1, bg: [0, 0, 0, 150])
-      console.print(x: x, y: y, string: text, fg: Colors.menu_text)
+      console.print(x: x, y: y, string: button.text, fg: Colors.menu_text)
     end
   end
 end
